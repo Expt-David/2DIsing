@@ -5,6 +5,7 @@
 #include "Time_Series.hpp"
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 
 int main(int argc, char const* argv[]){
@@ -14,7 +15,11 @@ int main(int argc, char const* argv[]){
     
     for(const auto T: temperatures){
         //TODO #12 <-------------------
-        system.WriteToFile();
+        Ising_System *isys = new Ising_System(T, 32);
+        isys->Simulate(50000);
+        std::cout << isys->GetMagnetization() << std::endl;
+        std::cout << isys->GetEnergy() << std::endl;
+        // system.WriteToFile();
     }
 
     //For Part 2 <-------------------

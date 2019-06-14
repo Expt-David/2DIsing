@@ -26,16 +26,17 @@ void Ising_System::IterationStep(){
     const int row=std::uniform_int_distribution<int>(0,system_width_-1)(random_number_generator_);
     const int column=std::uniform_int_distribution<int>(0,system_width_-1)(random_number_generator_);
     
-    const long energy_contribution_of_chosen_spin=//TODO #5 <-------------------
+    const long energy_contribution_of_chosen_spin=abs(GetEnergyContribution(row, column));
     
-    if (//TODO #6 <-------------------
-        ) {
+    if (GetEnergyContribution(row, column)>0) {
         if (std::uniform_real_distribution<double>(0,1)(random_number_generator_)<lookup_table_[energy_contribution_of_chosen_spin]) {
             //TODO #7 <-------------------
+            FlipSpin(row, column);
         }
     }
     else{
         //TODO #8 <-------------------
+        FlipSpin(row, column);
     }
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -45,6 +46,9 @@ void Ising_System::FlipSpin(const int row,const int column){
     
     //TODO #4 <-------------------
     //Hint: energy, flip, magnetization
+    ising_spins_[row][column] = !ising_spins_[row][column];
+    energy_ += 2 * GetEnergyContribution(row, column);
+    magnetization_ = (ising_spins_[row][column] == true) ? 1:-1;
 
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -84,7 +88,7 @@ const bool Ising_System::GetSpinRight(const int row,const int column)const{
         return ising_spins_[row][0];
     }
     else {
-        return ising_spins_[row][column+1]
+        return ising_spins_[row][column+1];
     }
 }
 ///////////////////////////////////////////////////////////////////////////
@@ -97,6 +101,20 @@ const int Ising_System::GetEnergyContribution(const int row,const int column)con
     }
     else --contributions;
     //TODO #3 <-------------------
+    if (ising_spins_[row][column]==GetSpinBelow(row, column)) {
+        ++contributions;
+    }
+    else --contributions;
+    if (ising_spins_[row][column]==GetSpinLeft(row, column)) {
+        ++contributions;
+    }
+    else --contributions;
+    if (ising_spins_[row][column]==GetSpinRight(row, column)) {
+        ++contributions;
+    }
+    else --contributions;
+    
+    return contributions;
 }
 ///////////////////////////////////////////////////////////////////////////
 long Ising_System::GetMagnetization()const{
