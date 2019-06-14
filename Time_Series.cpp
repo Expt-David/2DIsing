@@ -71,17 +71,25 @@ double Time_Series::GetVarianceEnergy()const{
 ///////////////////////////////////////////////////////////////////////////
 double Time_Series::GetVarianceMagnetization()const{
     //TODO #9 <-------------------
+    long tmp_mag=0;
+    for (auto& x : magnetization_series_) {
+        tmp_mag+=x*x;
+    }
+    double av_mag=GetAverageMagnetization();
+    return static_cast<double>(tmp_mag)/static_cast<double>(magnetization_series_.size())-av_mag*av_mag;
 }
 ///////////////////////////////////////////////////////////////////////////
 double Time_Series::GetSpecificHeat()const{
     if (temperature_) {
         //TODO #10 <-------------------
+        return GetVarianceEnergy() / (temperature_ * temperature_);
     }
     else return 0.0;
 }
 ///////////////////////////////////////////////////////////////////////////
 double Time_Series::GetSpecificSusceptibility()const{
     //TODO #11 <-------------------
+    return GetVarianceMagnetization() / temperature_;
 }
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
