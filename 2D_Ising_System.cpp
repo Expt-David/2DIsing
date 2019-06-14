@@ -47,8 +47,8 @@ void Ising_System::FlipSpin(const int row,const int column){
     //TODO #4 <-------------------
     //Hint: energy, flip, magnetization
     ising_spins_[row][column] = !ising_spins_[row][column];
-    energy_ += 2 * GetEnergyContribution(row, column);
-    magnetization_ = (ising_spins_[row][column] == true) ? 1:-1;
+    energy_ += -2 * GetEnergyContribution(row, column);
+    magnetization_ += (ising_spins_[row][column] == true) ? 2:-2;
 
 }
 ///////////////////////////////////////////////////////////////////////////

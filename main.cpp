@@ -3,6 +3,7 @@
 //
 
 #include "Time_Series.hpp"
+#include "2D_Ising_System.cpp"
 #include <vector>
 #include <fstream>
 #include <iostream>
