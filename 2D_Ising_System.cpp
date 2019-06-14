@@ -60,6 +60,12 @@ const bool Ising_System::GetSpinAbove(const int row,const int column)const{
 ///////////////////////////////////////////////////////////////////////////
 const bool Ising_System::GetSpinBelow(const int row,const int column)const{
     //TODO #1 <-------------------
+    if (row==0) {
+        return ising_spins_[system_width_-1][column];
+    }
+    else {
+        return ising_spins_[row-1][column];
+    }
 }
 ///////////////////////////////////////////////////////////////////////////
 const bool Ising_System::GetSpinLeft(const int row,const int column)const{
@@ -74,6 +80,12 @@ const bool Ising_System::GetSpinLeft(const int row,const int column)const{
 ///////////////////////////////////////////////////////////////////////////
 const bool Ising_System::GetSpinRight(const int row,const int column)const{
     //TODO #2 <-------------------
+    if (column==system_width_-1) {
+        return ising_spins_[row][0];
+    }
+    else {
+        return ising_spins_[row][column+1]
+    }
 }
 ///////////////////////////////////////////////////////////////////////////
 const int Ising_System::GetEnergyContribution(const int row,const int column)const{
